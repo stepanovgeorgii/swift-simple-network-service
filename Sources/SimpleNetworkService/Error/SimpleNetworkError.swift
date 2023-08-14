@@ -1,7 +1,5 @@
 //
-//  NetworkError.swift
-//
-//  Created by Georgy Stepanov on 13.08.2023.
+//  SimpleNetworkError.swift
 //
 
 import Foundation

@@ -1,5 +1,5 @@
 //
-//  DataParser.swift
+//  SimpleDataParser.swift
 //
 
 import Foundation
