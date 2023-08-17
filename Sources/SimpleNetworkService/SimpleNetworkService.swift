@@ -5,19 +5,22 @@
 import Foundation
 
 public final class SimpleNetworkService: SimpleNetworkServiceProtocol {
+    private let configuration: SimpleNetworkServiceConfiguration
     private let urlSession: URLSession
     private let dataParser: SimpleDataParserProtocol
 
     public init(
+        configurator: SimpleNetworkServiceConfiguration,
         urlSession: URLSession = .shared
     ) {
+        self.configuration = configurator
         self.urlSession = urlSession
         self.dataParser = SimpleDataParser()
     }
 
     public func request<T: Codable>(router: SimpleNetworkRouter) async throws -> T {
-        guard let request = router.request else {
-            throw SimpleNetworkError.invalidURLRequest(path: router.path)
+        guard let request = try router.request(baseUrl: configuration.baseUrl) else {
+            throw SimpleNetworkError.pathError(configuration.baseUrl)
         }
         do {
             let (data, _) = try await urlSession.data(for: request)
@@ -27,6 +30,6 @@ public final class SimpleNetworkService: SimpleNetworkServiceProtocol {
             throw SimpleNetworkError.requestFailed(error)
         } catch let error {
             throw SimpleNetworkError.decodingFailed(error)
-        }
+        } 
     }
 }

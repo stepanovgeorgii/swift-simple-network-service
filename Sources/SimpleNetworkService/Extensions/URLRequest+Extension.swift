@@ -29,9 +29,7 @@ extension URLRequest {
 
     // MARK: - Private
 
-    private static func queryItems(
-        by parameters: [String: CustomStringConvertible]?
-    ) -> [URLQueryItem]? {
+    private static func queryItems(by parameters: [String: CustomStringConvertible]?) -> [URLQueryItem]? {
         parameters?.filter { !($0.value is Data) }.compactMap {
             URLQueryItem(name: $0.key, value: $0.value.description)
         }
@@ -39,17 +37,13 @@ extension URLRequest {
 
     // MARK: - Configurations
 
-    func set(
-        httpMethod: HTTPMethod
-    ) -> Self {
+    func set(httpMethod: HTTPMethod) -> Self {
         var request = self
         request.httpMethod = httpMethod.rawValue
         return request
     }
 
-    func set(
-        headers: [String: String]?
-    ) -> Self {
+    func set(headers: [String: String]?) -> Self {
         guard let headers else { return self }
         var request = self
         headers.forEach { request.addValue($0.value, forHTTPHeaderField: $0.key) }

@@ -5,33 +5,35 @@
 import Foundation
 
 public protocol SimpleNetworkRouter {
-    var baseUrlString: NSString { get }
     var path: String { get }
     var method: HTTPMethod { get }
     var headers: [String: String]? { get }
     var query: [String: Any]? { get }
     var body: Encodable? { get }
-    var request: URLRequest? { get }
+
+    func request(baseUrl: String) throws -> URLRequest?
 }
 
 public extension SimpleNetworkRouter {
-    var baseUrlString: NSString { return NSString(string: "") }
-
-    var request: URLRequest? {
-        guard let url = URL(string: fullUrlString) else { return nil }
+    func request(baseUrl: String) throws -> URLRequest? {
+        guard let url = URL(string: fullUrlString(with: baseUrl)) else {
+            return nil
+        }
         return URLRequest.build(withQuery: query, forURL: url)
             .set(httpMethod: method)
             .set(headers: defaultHeaders)
             .set(headers: headers)
             .set(body: body)
     }
+
+    private func fullUrlString(with baseUrl: String) -> String {
+        NSString(string: baseUrl).appendingPathComponent(path)
+    }
 }
 
 // MARK: - Private
 
 private extension SimpleNetworkRouter {
-    var fullUrlString: String { return baseUrlString.appendingPathComponent(path) }
-
     var defaultHeaders: [String: String] {
         return [
             "Content-Type": "application/json",
