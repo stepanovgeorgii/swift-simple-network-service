@@ -3,5 +3,5 @@
 //
 
 public struct SimpleNetworkServiceConfiguration {
-    let baseUrl: String
+    public let baseUrl: String
 }
