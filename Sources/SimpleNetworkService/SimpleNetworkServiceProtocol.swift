@@ -1,5 +1,5 @@
 //
-//  NetworkServiceProtocol.swift
+//  SimpleNetworkServiceProtocol.swift
 //
 
 public protocol SimpleNetworkServiceProtocol: AnyObject {

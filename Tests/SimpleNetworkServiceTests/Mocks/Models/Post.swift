@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Post.swift
 //
 
 import Foundation
