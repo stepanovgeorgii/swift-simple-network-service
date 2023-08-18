@@ -3,5 +3,5 @@
 //
 
 public protocol SimpleNetworkServiceProtocol: AnyObject {
-    func request<T: Codable>(router: SimpleNetworkRouter) async throws -> T
+    func executeRequest<T: Codable>(withRouter router: SimpleNetworkRouter) async throws -> T
 }

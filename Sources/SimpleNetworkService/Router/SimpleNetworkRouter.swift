@@ -11,11 +11,11 @@ public protocol SimpleNetworkRouter {
     var query: [String: Any]? { get }
     var body: Encodable? { get }
 
-    func request(baseUrl: String) throws -> URLRequest?
+    func buildRequest(baseUrl: String) -> URLRequest?
 }
 
 public extension SimpleNetworkRouter {
-    func request(baseUrl: String) throws -> URLRequest? {
+    func buildRequest(baseUrl: String) -> URLRequest? {
         guard let url = URL(string: fullUrlString(with: baseUrl)) else {
             return nil
         }
